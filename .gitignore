@@ -1,0 +1,36 @@
+# Dependencies
+node_modules/
+Client/node_modules/
+Server/node_modules/
+
+# Environment Variables (CRITICAL)
+.env
+Client/.env
+Server/.env
+*.env.local
+
+# Build outputs
+dist/
+Client/dist/
+Server/dist/
+build/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Temporary files
+/tmp/
+.gemini/
