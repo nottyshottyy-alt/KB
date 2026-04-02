@@ -23,7 +23,7 @@ const ManageProducts = () => {
     const [description, setDescription] = useState('');
     const [price, setPrice] = useState(0);
     const [discountPrice, setDiscountPrice] = useState(0);
-    const [image, setImage] = useState('');
+    const [images, setImages] = useState([]);
     const [category, setCategory] = useState('');
     const [subCategory, setSubCategory] = useState('');
 
@@ -72,8 +72,8 @@ const ManageProducts = () => {
             const { data } = await api.post('/api/uploads', formData, {
                 headers: { 'Content-Type': 'multipart/form-data' }
             });
-            setImage(data.image);
-            toast.success('Asset uploaded successfully');
+            setImages(prev => [...prev, data.image]);
+            toast.success('Asset deployed to cloud');
         } catch (error) {
             console.error(error);
             toast.error('Asset upload failed');
@@ -88,7 +88,7 @@ const ManageProducts = () => {
         setDescription('');
         setPrice(0);
         setDiscountPrice(0);
-        setImage('');
+        setImages([]);
         setCategory('');
         setSubCategory('');
         setShowAddForm(false);
@@ -100,7 +100,7 @@ const ManageProducts = () => {
         setDescription(prod.description || '');
         setPrice(prod.price || 0);
         setDiscountPrice(prod.discountPrice || 0);
-        setImage(prod.images?.[0] || '');
+        setImages(prod.images || []);
 
         const catId = prod.category?._id || prod.category || '';
         setCategory(catId);
@@ -114,8 +114,8 @@ const ManageProducts = () => {
     const handleCreateProduct = async (e) => {
         e.preventDefault();
         try {
-            if (!image) {
-                toast.error('Identification visual required (Image)');
+            if (images.length === 0) {
+                toast.error('Identification visual required (At least 1 Image)');
                 return;
             }
             setLoading(true);
@@ -125,7 +125,7 @@ const ManageProducts = () => {
                 description,
                 price: Number(price),
                 discountPrice: Number(discountPrice),
-                images: image ? [image] : [],
+                images: images,
                 category,
                 subCategory: subCategory || undefined,
                 stock: 999 // Default to instock as requested
@@ -237,15 +237,26 @@ const ManageProducts = () => {
                                 <div className="flex items-center gap-4 h-14">
                                     <label className="flex-1 cursor-pointer bg-slate-50 border border-slate-200 px-6 h-full rounded-2xl flex items-center justify-center gap-3 text-slate-400 hover:text-zinc-950 hover:border-primary-500/30 transition-all">
                                         <ImageIcon className="w-4 h-4" />
-                                        <span className="text-[9px] font-black uppercase tracking-widest">{uploading ? 'Processing...' : image ? 'Image Set' : 'Choose Image'}</span>
-                                        <input type="file" onChange={uploadFileHandler} className="hidden" accept="image/*" />
+                                        <span className="text-[9px] font-black uppercase tracking-widest">{uploading ? 'Processing...' : 'Upload Asset'}</span>
+                                        <input type="file" onChange={uploadFileHandler} className="hidden" accept="image/*" multiple />
                                     </label>
-                                    {image && (
-                                        <div className="w-14 h-14 bg-white rounded-2xl border border-slate-200 p-1 flex-shrink-0">
-                                            <img src={image} alt="Preview" className="w-full h-full object-contain mix-blend-multiply" />
-                                        </div>
-                                    )}
                                 </div>
+                                {images.length > 0 && (
+                                    <div className="grid grid-cols-4 sm:grid-cols-6 gap-3 mt-4">
+                                        {images.map((img, idx) => (
+                                            <div key={idx} className="relative group/img aspect-square bg-white rounded-xl border border-slate-200 p-1">
+                                                <img src={img} alt="Preview" className="w-full h-full object-contain mix-blend-multiply" />
+                                                <button 
+                                                    type="button"
+                                                    onClick={() => setImages(prev => prev.filter((_, i) => i !== idx))}
+                                                    className="absolute -top-2 -right-2 w-5 h-5 bg-red-500 text-white rounded-full flex items-center justify-center opacity-0 group-hover/img:opacity-100 transition-opacity shadow-lg"
+                                                >
+                                                    <X className="w-3 h-3" />
+                                                </button>
+                                            </div>
+                                        ))}
+                                    </div>
+                                )}
                             </div>
 
                             <div className="space-y-2">

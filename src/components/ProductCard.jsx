@@ -14,6 +14,7 @@ const QuickViewModal = ({ product, onClose }) => {
     const { cartItems, addToCart, setCartQty, removeFromCart } = useCartStore();
     const itemInCart = cartItems.find(x => x.product === product._id);
     const qty = itemInCart ? itemInCart.qty : 0;
+    const [activeImageIndex, setActiveImageIndex] = useState(0);
 
     const handleAdd = () => {
         addToCart(product, 1);
@@ -54,33 +55,54 @@ const QuickViewModal = ({ product, onClose }) => {
                     animate={{ opacity: 1, scale: 1, y: 0 }}
                     exit={{ opacity: 0, scale: 0.9, y: 20 }}
                     transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-                    className="relative z-10 w-full max-w-3xl bg-zinc-900 border border-white/10 rounded-3xl overflow-hidden shadow-2xl"
+                    className="relative z-10 w-full max-w-4xl bg-zinc-900 border border-white/10 rounded-3xl overflow-hidden shadow-2xl"
                     onClick={e => e.stopPropagation()}
                 >
                     {/* Close */}
                     <button
                         onClick={onClose}
-                        className="absolute top-4 right-4 z-20 w-9 h-9 rounded-full bg-zinc-800 border border-white/10 flex items-center justify-center text-slate-400 hover:text-white hover:bg-zinc-700 transition-all"
+                        className="absolute top-4 right-4 z-20 w-9 h-9 rounded-full bg-zinc-800 border border-white/10 flex items-center justify-center text-slate-400 hover:text-white hover:bg-zinc-700 transition-all font-black"
                     >
                         <X className="w-4 h-4" />
                     </button>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2">
-                        {/* Image */}
-                        <div className="relative bg-zinc-950 flex items-center justify-center p-8 min-h-[260px]">
+                    <div className="grid grid-cols-1 md:grid-cols-[1fr_1.1fr]">
+                        {/* Image Gallery */}
+                        <div className="relative bg-zinc-950 flex flex-col p-6 sm:p-8 min-h-[300px] md:min-h-[450px]">
                             {discountPct > 0 && (
                                 <span className="absolute top-4 left-4 bg-primary-500 text-zinc-950 text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-lg z-10">
                                     -{discountPct}% OFF
                                 </span>
                             )}
-                            {product.images && product.images.length > 0 ? (
-                                <img
-                                    src={product.images[0]}
-                                    alt={product.title}
-                                    className="w-full h-56 object-contain drop-shadow-2xl"
-                                />
-                            ) : (
-                                <ShoppingBag className="w-24 h-24 text-zinc-800" />
+                            
+                            <div className="flex-1 flex items-center justify-center relative overflow-hidden">
+                                <AnimatePresence mode="wait">
+                                    <motion.img
+                                        key={activeImageIndex}
+                                        initial={{ opacity: 0, x: 20 }}
+                                        animate={{ opacity: 1, x: 0 }}
+                                        exit={{ opacity: 0, x: -20 }}
+                                        transition={{ duration: 0.3 }}
+                                        src={product.images && product.images.length > 0 ? product.images[activeImageIndex] : '/images/placeholder.png'}
+                                        alt={product.title}
+                                        className="w-full h-48 sm:h-64 md:h-72 object-contain drop-shadow-2xl mix-blend-lighten"
+                                    />
+                                </AnimatePresence>
+                            </div>
+
+                            {/* Thumbnails */}
+                            {product.images && product.images.length > 1 && (
+                                <div className="flex gap-2 justify-center mt-6 overflow-x-auto pb-2 no-scrollbar">
+                                    {product.images.map((img, idx) => (
+                                        <button
+                                            key={idx}
+                                            onClick={() => setActiveImageIndex(idx)}
+                                            className={`w-12 h-12 flex-shrink-0 rounded-lg border transition-all overflow-hidden bg-zinc-800 flex items-center justify-center p-1.5 ${activeImageIndex === idx ? 'border-primary-500 ring-2 ring-primary-500/20' : 'border-white/5 hover:border-white/20'}`}
+                                        >
+                                            <img src={img} alt="" className="w-full h-full object-contain mix-blend-lighten" />
+                                        </button>
+                                    ))}
+                                </div>
                             )}
                         </div>
 
