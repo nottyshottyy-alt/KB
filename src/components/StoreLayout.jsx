@@ -1,8 +1,17 @@
 'use client';
 
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useCallback, Suspense } from 'react';
 import Link from 'next/link';
 import { useRouter, usePathname, useSearchParams } from 'next/navigation';
+
+// Isolated component so useSearchParams doesn't block static rendering
+function SearchParamsWatcher({ onParamsChange }) {
+    const searchParams = useSearchParams();
+    useEffect(() => {
+        onParamsChange(searchParams);
+    }, [searchParams, onParamsChange]);
+    return null;
+}
 import { ShoppingCart, User, Search, Menu, LogOut, Package, Heart, X, ChevronRight, ShieldCheck, Phone, Mail, MapPin, ArrowRight } from 'lucide-react';
 import useAuthStore from '@/store/authStore';
 import useCartStore from '@/store/cartStore';
@@ -23,7 +32,6 @@ const StoreLayout = ({ children }) => {
     const { cartItems, addToCart } = useCartStore();
     const router = useRouter();
     const pathname = usePathname();
-    const searchParams = useSearchParams();
 
     const [searchQuery, setSearchQuery] = useState('');
     const [searchFocused, setSearchFocused] = useState(false);
@@ -139,6 +147,9 @@ const StoreLayout = ({ children }) => {
 
     return (
         <div className="min-h-screen flex flex-col bg-zinc-950 text-slate-100 font-sans selection:bg-primary-500/30 selection:text-white relative">
+            <Suspense fallback={null}>
+                <SearchParamsWatcher onParamsChange={() => {}} />
+            </Suspense>
             
             {/* Header Area */}
             <motion.header 
