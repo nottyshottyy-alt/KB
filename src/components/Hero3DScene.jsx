@@ -210,15 +210,23 @@ const Scene = () => {
 };
 
 const Hero3DScene = () => {
-  return (
-    <div className="w-full h-full cursor-grab active:cursor-grabbing">
-      <Suspense fallback={null}>
-        <Canvas shadows dpr={[1, 2]}>
-          <Scene />
-        </Canvas>
-      </Suspense>
-    </div>
-  );
+    const [mounted, setMounted] = React.useState(false);
+    
+    React.useEffect(() => {
+      setMounted(true);
+    }, []);
+
+    if (!mounted) return null;
+
+    return (
+        <div className="w-full h-full cursor-grab active:cursor-grabbing">
+            <Suspense fallback={null}>
+                <Canvas shadows dpr={[1, 2]}>
+                    <Scene />
+                </Canvas>
+            </Suspense>
+        </div>
+    );
 };
 
 export default Hero3DScene;

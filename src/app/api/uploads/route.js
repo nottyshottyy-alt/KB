@@ -1,7 +1,13 @@
 import { NextResponse } from 'next/server';
-import { writeFile, mkdir } from 'fs/promises';
-import { join } from 'path';
+import { v2 as cloudinary } from 'cloudinary';
 import { protect, admin } from '@/lib/middleware/authMiddleware';
+
+// Cloudinary Configuration
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 export async function POST(req) {
     try {
@@ -16,34 +22,34 @@ export async function POST(req) {
         const file = formData.get('image');
 
         if (!file) {
-            return NextResponse.json({ message: 'No file uploaded' }, { status: 400 });
+            return NextResponse.json({ message: 'No identification visual detected' }, { status: 400 });
         }
 
-        const bytes = await file.arrayBuffer();
-        const buffer = Buffer.from(bytes);
+        // Convert file to buffer for Cloudinary
+        const arrayBuffer = await file.arrayBuffer();
+        const buffer = Buffer.from(arrayBuffer);
 
-        // Name generation
-        const originalName = file.name;
-        const extension = originalName.split('.').pop();
-        const fileName = `image-${Date.now()}.${extension}`;
-        
-        // Ensure static/uploads exists
-        const uploadDir = join(process.cwd(), 'public', 'images', 'uploads');
-        try {
-            await mkdir(uploadDir, { recursive: true });
-        } catch (e) {
-            // Already exists or other error
-        }
-
-        const path = join(uploadDir, fileName);
-        await writeFile(path, buffer);
+        // Upload to Cloudinary using a Promise
+        const uploadResponse = await new Promise((resolve, reject) => {
+            const uploadStream = cloudinary.uploader.upload_stream(
+                {
+                    folder: 'kb_computers',
+                    resource_type: 'auto',
+                },
+                (error, result) => {
+                    if (error) reject(error);
+                    else resolve(result);
+                }
+            );
+            uploadStream.end(buffer);
+        });
 
         return NextResponse.json({
-            message: 'Image Uploaded successfully',
-            image: `/images/uploads/${fileName}`
+            message: 'Asset deployed successfully',
+            image: uploadResponse.secure_url
         });
     } catch (error) {
-        console.error('Upload Error:', error);
-        return NextResponse.json({ message: 'Server error during file deployment' }, { status: 500 });
+        console.error('Deployment Failure:', error);
+        return NextResponse.json({ message: 'Operational failure: Cloud synchronization failed' }, { status: 500 });
     }
 }

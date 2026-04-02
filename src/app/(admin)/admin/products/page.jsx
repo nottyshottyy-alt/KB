@@ -273,7 +273,7 @@ const ManageProducts = () => {
 
                             <div className="lg:col-span-3 space-y-2">
                                 <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest px-2 italic">Product Description</label>
-                                <textarea required value={description} onChange={(e) => setDescription(e.target.value)} rows="3" placeholder="Enter product description..." className="w-full px-6 py-4 bg-slate-50 border border-slate-200 text-zinc-950 text-sm font-bold rounded-[2rem] focus:border-primary-500 transition-all focus:outline-none placeholder-slate-300 resize-none"></textarea>
+                                <textarea value={description} onChange={(e) => setDescription(e.target.value)} rows="3" placeholder="Enter product description..." className="w-full px-6 py-4 bg-slate-50 border border-slate-200 text-zinc-950 text-sm font-bold rounded-[2rem] focus:border-primary-500 transition-all focus:outline-none placeholder-slate-300 resize-none"></textarea>
                             </div>
                         </div>
 
