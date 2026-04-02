@@ -9,9 +9,6 @@ import useCartStore from '@/store/cartStore';
 import toast from 'react-hot-toast';
 
 // Interactive Components
-import ParticleBackground from '@/components/ParticleBackground';
-import AmbientBackground from '@/components/AmbientBackground';
-import ScrollStorySection from '@/components/ScrollStorySection';
 import ProductCard from '@/components/ProductCard';
 
 const Hero3DScene = React.lazy(() => import('@/components/Hero3DScene'));
@@ -36,8 +33,8 @@ const HomePage = () => {
     }, []);
 
     const fadeInUp = {
-        hidden: { opacity: 0, y: 40 },
-        visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] } }
+        hidden: { opacity: 0, y: 20 },
+        visible: { opacity: 1, y: 0, transition: { duration: 0.4, ease: "easeOut" } }
     };
 
     const staggerContainer = {
@@ -49,16 +46,15 @@ const HomePage = () => {
     };
 
     const textReveal = {
-        hidden: { y: "100%" },
-        visible: { y: 0, transition: { duration: 1, ease: [0.22, 1, 0.36, 1] } }
+        hidden: { y: 20, opacity: 0 },
+        visible: { y: 0, opacity: 1, transition: { duration: 0.5, ease: "easeOut" } }
     };
 
     return (
         <div className="min-h-screen bg-zinc-950 overflow-hidden text-slate-200">
 
             {/* --- BACKGROUND --- */}
-            <ParticleBackground count={40} color="#44d62c" opacity={0.3} />
-            <AmbientBackground />
+            {/* Background noise removed for maximum performance */}
 
             {/* --- HERO SECTION --- */}
             <section className="relative h-auto min-h-[700px] lg:h-[calc(100vh-180px)] flex items-center overflow-hidden border-b border-white/5 mb-12 sm:mb-20">
@@ -189,8 +185,7 @@ const HomePage = () => {
                         </motion.h3>
                     </div>
 
-                    <ScrollStorySection animationType="zoom">
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                             {[
                                 { name: 'Custom Systems', image: '/images/custom_pc.png', link: '/products' },
                                 { name: 'Computer Screens', image: '/images/computer_screens.png', link: '/products' },
@@ -222,8 +217,7 @@ const HomePage = () => {
                                 </motion.div>
                             ))}
                         </div>
-                    </ScrollStorySection>
-                </div>
+                    </div>
             </section>
 
             {/* --- PRODUCT GRID --- */}
@@ -266,17 +260,15 @@ const HomePage = () => {
                             ))}
                         </div>
                     ) : (
-                        <ScrollStorySection animationType="reveal">
-                            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-                                {products.length === 0 ? (
-                                    <p className="col-span-4 text-center text-slate-500 py-12">No equipment listed in current registry.</p>
-                                ) : (
-                                    products.slice(0, 4).map(product => (
-                                        <ProductCard key={product._id} product={product} />
-                                    ))
-                                )}
-                            </div>
-                        </ScrollStorySection>
+                        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+                            {products.length === 0 ? (
+                                <p className="col-span-4 text-center text-slate-500 py-12">No equipment listed in current registry.</p>
+                            ) : (
+                                products.slice(0, 4).map(product => (
+                                    <ProductCard key={product._id} product={product} />
+                                ))
+                            )}
+                        </div>
                     )}
                 </div>
             </section>

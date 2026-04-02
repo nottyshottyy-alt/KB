@@ -17,7 +17,6 @@ import useAuthStore from '@/store/authStore';
 import useCartStore from '@/store/cartStore';
 import api from '@/lib/api/axios';
 import toast from 'react-hot-toast';
-import Lenis from 'lenis';
 import { clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion';
@@ -56,32 +55,6 @@ const StoreLayout = ({ children }) => {
 
     useEffect(() => {
         setMounted(true);
-    }, []);
-
-    // Initialize Lenis for smooth scrolling
-    useEffect(() => {
-        const lenis = new Lenis({
-            duration: 1.2,
-            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-            orientation: 'vertical',
-            gestureOrientation: 'vertical',
-            smoothWheel: true,
-            wheelMultiplier: 1,
-            smoothTouch: false,
-            touchMultiplier: 2,
-            infinite: false,
-        });
-
-        function raf(time) {
-            lenis.raf(time);
-            requestAnimationFrame(raf);
-        }
-
-        requestAnimationFrame(raf);
-
-        return () => {
-            lenis.destroy();
-        };
     }, []);
 
     // Close mobile menu on route change & Scroll to top
