@@ -35,18 +35,18 @@ const ManageOrders = () => {
                 <div>
                     <div className="flex items-center gap-2 mb-2">
                         <ShoppingCart className="w-4 h-4 text-primary-600" />
-                        <span className="text-[9px] font-black text-primary-600 uppercase tracking-[0.4em]">Store Orders</span>
+                        <span className="text-[10px] font-bold text-primary-600 uppercase tracking-wider">Customer Orders</span>
                     </div>
-                    <h1 className="text-4xl md:text-5xl font-black text-zinc-950 italic tracking-tighter uppercase leading-none">Order <span className="text-primary-600">Management</span></h1>
-                    <p className="text-[10px] md:text-xs font-black text-slate-500 uppercase tracking-[0.5em] mt-3 italic">Track and manage customer purchases</p>
+                    <h1 className="text-4xl md:text-5xl font-bold text-zinc-950 tracking-tight uppercase leading-none">Order <span className="text-primary-600">Management</span></h1>
+                    <p className="text-[10px] md:text-xs font-medium text-slate-500 mt-3">Track and manage customer purchases</p>
                 </div>
             </div>
 
             <div className="bg-white border border-slate-200 rounded-[3rem] shadow-sm overflow-hidden">
                 <div className="p-8 md:p-10 border-b border-slate-100 flex items-center justify-between">
                     <div>
-                        <h2 className="text-xl md:text-2xl font-black text-zinc-950 italic uppercase tracking-tighter">Order <span className="text-primary-600">History</span></h2>
-                        <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest mt-1">Total Orders: {orders.length}</p>
+                        <h2 className="text-xl md:text-2xl font-bold text-zinc-950 tracking-tight uppercase">Order <span className="text-primary-600">History</span></h2>
+                        <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mt-1">Total Orders: {orders.length}</p>
                     </div>
                 </div>
                 
@@ -73,32 +73,32 @@ const ManageOrders = () => {
                                     </td>
                                     <td className="py-6 px-10">
                                         <div className="flex items-center gap-4">
-                                            <div className="w-10 h-10 rounded-xl bg-white border border-slate-200 shadow-sm flex items-center justify-center text-primary-600 group-hover:border-primary-500/30 transition-all font-black text-xs">
-                                                {order.user?.name ? order.user.name.charAt(0).toUpperCase() : 'G'}
+                                            <div className="w-10 h-10 rounded-xl bg-white border border-slate-200 shadow-sm flex items-center justify-center text-primary-600 group-hover:border-primary-500/30 transition-all font-bold text-xs uppercase">
+                                                {order.user?.name ? order.user.name.charAt(0) : 'G'}
                                             </div>
                                             <div className="min-w-0">
-                                                <p className="text-xs font-black text-zinc-950 uppercase italic truncate">{order.user?.name || 'Guest'}</p>
-                                                <p className="text-[8px] font-bold text-slate-400 uppercase tracking-widest mt-0.5">{order.user?.email || 'Direct Checkout'}</p>
+                                                <p className="text-xs font-bold text-zinc-950 uppercase truncate">{order.user?.name || 'Guest'}</p>
+                                                <p className="text-[8px] font-medium text-slate-400 uppercase tracking-wider mt-0.5">{order.user?.email || 'Direct Checkout'}</p>
                                             </div>
                                         </div>
                                     </td>
                                     <td className="py-6 px-10">
                                         <div className="flex flex-col">
-                                            <span className="text-[10px] font-black text-zinc-950 uppercase tracking-tighter font-mono">{new Date(order.createdAt).toLocaleDateString('en-PK')}</span>
-                                            <span className="text-[8px] font-bold text-slate-400 uppercase tracking-widest mt-0.5">{new Date(order.createdAt).toLocaleTimeString('en-PK', { hour12: true, hour: '2-digit', minute: '2-digit' })}</span>
+                                            <span className="text-[10px] font-bold text-zinc-950 uppercase tracking-tight font-mono">{new Date(order.createdAt).toLocaleDateString('en-PK')}</span>
+                                            <span className="text-[8px] font-medium text-slate-400 tracking-wider mt-0.5 uppercase">{new Date(order.createdAt).toLocaleTimeString('en-PK', { hour12: true, hour: '2-digit', minute: '2-digit' })}</span>
                                         </div>
                                     </td>
                                     <td className="py-6 px-10">
-                                        <span className="text-sm font-black text-primary-600 italic tracking-tighter">PKR {order.totalPrice.toLocaleString()}</span>
+                                        <span className="text-sm font-bold text-primary-600 tracking-tight">PKR {order.totalPrice.toLocaleString()}</span>
                                     </td>
                                     <td className="py-6 px-10">
                                         <div className="flex items-center gap-2">
                                             {order.isPaid ? (
-                                                <span className="inline-flex items-center gap-2 px-3 py-1.5 bg-primary-50 border border-primary-100 rounded-full text-[8px] font-black text-primary-600 uppercase tracking-widest">
+                                                <span className="inline-flex items-center gap-2 px-3 py-1.5 bg-primary-50 border border-primary-100 rounded-full text-[8px] font-bold text-primary-600 uppercase tracking-wider">
                                                     <CheckCircle className="w-2.5 h-2.5 fill-current" /> Paid
                                                 </span>
                                             ) : (
-                                                <span className="inline-flex items-center gap-2 px-3 py-1.5 bg-red-50 border border-red-100 rounded-full text-[8px] font-black text-red-600 uppercase tracking-widest">
+                                                <span className="inline-flex items-center gap-2 px-3 py-1.5 bg-red-50 border border-red-100 rounded-full text-[8px] font-bold text-red-600 uppercase tracking-wider">
                                                     <XCircle className="w-2.5 h-2.5 fill-current" /> Unpaid
                                                 </span>
                                             )}

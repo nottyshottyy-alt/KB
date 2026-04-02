@@ -187,16 +187,16 @@ const ManageProducts = () => {
                 <div>
                     <div className="flex items-center gap-2 mb-2">
                         <Package className="w-4 h-4 text-primary-600" />
-                        <span className="text-[9px] font-black text-primary-600 uppercase tracking-[0.4em]">Store Inventory</span>
+                        <span className="text-[10px] font-bold text-primary-600 uppercase tracking-wider">Inventory</span>
                     </div>
-                    <h1 className="text-4xl md:text-5xl font-black text-zinc-950 italic tracking-tighter uppercase leading-none">Product <span className="text-primary-600">Management</span></h1>
+                    <h1 className="text-4xl md:text-5xl font-bold text-zinc-950 tracking-tight uppercase leading-none">Product <span className="text-primary-600">Management</span></h1>
                 </div>
                 <button
                     onClick={() => {
                         if (showAddForm) resetForm();
                         else setShowAddForm(true);
                     }}
-                    className={`group flex items-center gap-3 px-8 py-4 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all ${
+                    className={`group flex items-center gap-3 px-8 py-4 rounded-2xl text-[10px] font-bold uppercase tracking-wider transition-all ${
                         showAddForm 
                             ? 'bg-white text-slate-400 border border-slate-200 hover:text-zinc-950' 
                             : 'bg-primary-500 text-zinc-950 shadow-[0_20px_40px_rgba(68,214,44,0.15)] hover:bg-zinc-950 hover:text-white'
@@ -218,7 +218,7 @@ const ManageProducts = () => {
                         <Package className="w-32 h-32 text-zinc-950" />
                     </div>
                     
-                    <h2 className="text-xl md:text-2xl font-black text-zinc-950 italic uppercase tracking-tighter mb-10 flex items-center gap-4">
+                    <h2 className="text-xl md:text-2xl font-bold text-zinc-950 tracking-tight uppercase mb-10 flex items-center gap-4">
                         <div className="w-10 h-10 rounded-xl bg-primary-50 border border-primary-100 flex items-center justify-center">
                             <Plus className="w-5 h-5 text-primary-600" />
                         </div>
@@ -228,16 +228,16 @@ const ManageProducts = () => {
                     <form onSubmit={handleCreateProduct} className="space-y-8 relative z-10">
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                             <div className="lg:col-span-2 space-y-2">
-                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest px-2 italic">Product Name</label>
-                                <input type="text" required value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Enter product name" className="w-full px-6 py-4 bg-slate-50 border border-slate-200 text-zinc-950 text-sm font-bold rounded-2xl focus:border-primary-500 transition-all focus:outline-none placeholder-slate-300" />
+                                <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest px-2">Product Name</label>
+                                <input type="text" required value={title} onChange={(e) => setTitle(e.target.value)} placeholder="e.g. RTX 4090 Gaming Pro" className="w-full px-6 py-4 bg-slate-50 border border-slate-200 text-zinc-950 text-sm font-bold rounded-2xl focus:border-primary-500 transition-all focus:outline-none placeholder-slate-300" />
                             </div>
                             
                             <div className="space-y-2">
-                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest px-2 italic">Asset Visualization</label>
+                                <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest px-2">Product Images</label>
                                 <div className="flex items-center gap-4 h-14">
                                     <label className="flex-1 cursor-pointer bg-slate-50 border border-slate-200 px-6 h-full rounded-2xl flex items-center justify-center gap-3 text-slate-400 hover:text-zinc-950 hover:border-primary-500/30 transition-all">
                                         <ImageIcon className="w-4 h-4" />
-                                        <span className="text-[9px] font-black uppercase tracking-widest">{uploading ? 'Processing...' : 'Upload Asset'}</span>
+                                        <span className="text-[9px] font-bold uppercase tracking-widest">{uploading ? 'Processing...' : 'Upload Image'}</span>
                                         <input type="file" onChange={uploadFileHandler} className="hidden" accept="image/*" multiple />
                                     </label>
                                 </div>
@@ -260,21 +260,21 @@ const ManageProducts = () => {
                             </div>
 
                             <div className="space-y-2">
-                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest px-2 italic">Market Value (PKR)</label>
+                                <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest px-2">Original Price (PKR)</label>
                                 <input type="number" required value={price} onChange={(e) => setPrice(e.target.value)} placeholder="0.00" className="w-full px-6 py-4 bg-slate-50 border border-slate-200 text-zinc-950 text-sm font-bold rounded-2xl focus:border-primary-500 transition-all focus:outline-none " />
                             </div>
 
                             <div className="space-y-2">
-                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest px-2 italic">Operational Discount (PKR)</label>
-                                <input type="number" value={discountPrice} onChange={(e) => setDiscountPrice(e.target.value)} placeholder="0.00" className="w-full px-6 py-4 bg-slate-50 border border-slate-200 text-primary-600 text-sm font-bold rounded-2xl focus:border-primary-500 transition-all focus:outline-none " />
+                                <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest px-2">Sale Price (PKR)</label>
+                                <input type="number" value={discountPrice} onChange={(e) => setDiscountPrice(e.target.value)} placeholder="Leave zero for no discount" className="w-full px-6 py-4 bg-slate-50 border border-slate-200 text-primary-600 text-sm font-bold rounded-2xl focus:border-primary-500 transition-all focus:outline-none " />
                             </div>
 
                             <div className="space-y-2">
-                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest px-2 italic">Sector (Category)</label>
+                                <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest px-2">Product Category</label>
                                 <select required value={category} onChange={(e) => {
                                     setCategory(e.target.value);
                                     fetchSubCategories(e.target.value);
-                                }} className="w-full px-6 py-4 bg-slate-50 border border-slate-200 text-zinc-950 text-[10px] font-black uppercase tracking-widest rounded-2xl focus:border-primary-500 transition-all focus:outline-none appearance-none cursor-pointer">
+                                }} className="w-full px-6 py-4 bg-slate-50 border border-slate-200 text-zinc-950 text-[10px] font-bold uppercase tracking-wider rounded-2xl focus:border-primary-500 transition-all focus:outline-none appearance-none cursor-pointer">
                                     <option value="" className="bg-white">SELECT CATEGORY</option>
                                     {categories.map(cat => (
                                         <option key={cat._id} value={cat._id} className="bg-white text-zinc-950">{cat.name}</option>
@@ -283,8 +283,8 @@ const ManageProducts = () => {
                             </div>
 
                             <div className="lg:col-span-3 space-y-2">
-                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest px-2 italic">Product Description</label>
-                                <textarea value={description} onChange={(e) => setDescription(e.target.value)} rows="3" placeholder="Enter product description..." className="w-full px-6 py-4 bg-slate-50 border border-slate-200 text-zinc-950 text-sm font-bold rounded-[2rem] focus:border-primary-500 transition-all focus:outline-none placeholder-slate-300 resize-none"></textarea>
+                                <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest px-2">Specifications / Description</label>
+                                <textarea value={description} onChange={(e) => setDescription(e.target.value)} rows="3" placeholder="Enter technical specifications or product details..." className="w-full px-6 py-4 bg-slate-50 border border-slate-200 text-zinc-950 text-sm font-bold rounded-[2rem] focus:border-primary-500 transition-all focus:outline-none placeholder-slate-300 resize-none"></textarea>
                             </div>
                         </div>
 
@@ -300,11 +300,11 @@ const ManageProducts = () => {
             )}
 
             {/* Catalog List */}
-            <div className="bg-white border border-slate-200 rounded-[3rem] shadow-sm overflow-hidden">
+            <div className="bg-white border border-slate-200 rounded-[3rem] shadow-sm overflow-hidden text-zinc-950">
                 <div className="p-8 md:p-10 border-b border-slate-100 flex items-center justify-between">
                     <div>
-                        <h2 className="text-xl md:text-2xl font-black text-zinc-950 italic uppercase tracking-tighter">Product <span className="text-primary-600">List</span></h2>
-                        <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest mt-1">Total Products: {products.length}</p>
+                        <h2 className="text-xl md:text-2xl font-bold tracking-tight uppercase">Inventory <span className="text-primary-600">Overview</span></h2>
+                        <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mt-1">Total Items: {products.length}</p>
                     </div>
                 </div>
                 
@@ -344,8 +344,8 @@ const ManageProducts = () => {
                                     </td>
                                     <td className="py-6 px-10">
                                         <div className="flex flex-col">
-                                            <span className="text-sm font-black text-zinc-950 italic tracking-tighter">PKR {(prod.discountPrice || prod.price).toLocaleString()}</span>
-                                            {prod.discountPrice > 0 && <span className="text-[9px] font-black text-primary-600/50 line-through">PKR {prod.price.toLocaleString()}</span>}
+                                            <span className="text-sm font-bold text-zinc-950 tracking-tight">PKR {(prod.discountPrice || prod.price).toLocaleString()}</span>
+                                            {prod.discountPrice > 0 && <span className="text-[9px] font-bold text-primary-600/50 line-through">PKR {prod.price.toLocaleString()}</span>}
                                         </div>
                                     </td>
                                     <td className="py-6 px-10">

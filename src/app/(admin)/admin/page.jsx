@@ -15,9 +15,9 @@ const StatCard = ({ title, value, icon: Icon, colorClass, sub }) => (
             <Icon className="w-6 h-6 md:w-7 md:h-7 text-zinc-950" />
         </div>
         <div className="min-w-0">
-            <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest truncate">{title}</p>
-            <h3 className="text-2xl md:text-3xl font-black text-slate-900 mt-1 italic tracking-tighter">{value}</h3>
-            {sub && <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest mt-1 group-hover:text-primary-500 transition-colors uppercase">{sub}</p>}
+            <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider truncate">{title}</p>
+            <h3 className="text-2xl md:text-3xl font-bold text-slate-900 mt-1 tracking-tight">{value}</h3>
+            {sub && <p className="text-[9px] font-medium text-slate-400 mt-1 group-hover:text-primary-600 transition-colors">{sub}</p>}
         </div>
     </div>
 );
@@ -58,11 +58,11 @@ const AdminDashboard = () => {
         <div className="space-y-10">
             <div>
                 <div className="flex items-center gap-2 mb-2">
-                    <div className="w-2 h-2 rounded-full bg-primary-500 animate-pulse shadow-[0_0_10px_rgba(68,214,44,0.3)]"></div>
-                    <span className="text-[9px] font-black text-primary-500 uppercase tracking-[0.4em]">System Status: Online</span>
+                    <div className="w-2 h-2 rounded-full bg-primary-500 shadow-[0_0_10px_rgba(68,214,44,0.3)]"></div>
+                    <span className="text-[10px] font-bold text-primary-600 uppercase tracking-wider">System Status: Active</span>
                 </div>
-                <h1 className="text-4xl md:text-6xl font-black text-zinc-950 italic tracking-tighter uppercase leading-none">Dash<span className="text-primary-500 drop-shadow-[0_0_30px_rgba(68,214,44,0.05)]">board</span></h1>
-                <p className="text-[10px] md:text-xs font-black text-slate-500 uppercase tracking-[0.5em] mt-3">Quick statistics and recent activity</p>
+                <h1 className="text-4xl md:text-6xl font-bold text-zinc-950 tracking-tight leading-none">Store <span className="text-primary-600">Dashboard</span></h1>
+                <p className="text-[10px] md:text-xs font-medium text-slate-500 mt-3">Quick statistics and recent store activity</p>
             </div>
 
             {/* Stat Cards */}
@@ -109,8 +109,8 @@ const AdminDashboard = () => {
                 <div className="lg:col-span-7 bg-white p-8 md:p-10 rounded-[3rem] border border-slate-200 shadow-sm overflow-hidden group">
                     <div className="flex items-center justify-between mb-10">
                         <div>
-                            <h2 className="text-xl md:text-2xl font-black text-zinc-950 italic uppercase tracking-tighter">Best Selling <span className="text-primary-500">Products</span></h2>
-                            <p className="text-[9px] font-bold text-slate-500 uppercase tracking-widest mt-1 italic">Items with highest sales</p>
+                            <h2 className="text-xl md:text-2xl font-bold text-zinc-950 tracking-tight">Best Selling <span className="text-primary-600">Products</span></h2>
+                            <p className="text-[10px] font-medium text-slate-500 mt-1">Items with highest sales volume</p>
                         </div>
                         <TrendingUp className="w-6 h-6 text-primary-500" />
                     </div>
@@ -119,7 +119,7 @@ const AdminDashboard = () => {
                         <div className="space-y-4">{[...Array(5)].map((_, i) => <Skeleton key={i} className="h-16" />)}</div>
                     ) : stats.topProducts.length === 0 ? (
                         <div className="py-20 text-center border-2 border-dashed border-slate-100 rounded-3xl">
-                            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">No transaction data registered</p>
+                            <p className="text-[10px] font-medium text-slate-400 uppercase tracking-wider">No sales recorded yet</p>
                         </div>
                     ) : (
                         <div className="space-y-4">
@@ -148,8 +148,8 @@ const AdminDashboard = () => {
                 <div className="lg:col-span-5 bg-white p-8 md:p-10 rounded-[3rem] border border-slate-200 shadow-sm relative overflow-hidden">
                     <div className="flex items-center justify-between mb-10">
                         <div>
-                            <h2 className="text-xl md:text-2xl font-black text-zinc-950 italic uppercase tracking-tighter">Recent <span className="text-primary-500">Orders</span></h2>
-                            <p className="text-[9px] font-bold text-slate-500 uppercase tracking-widest mt-1 italic">Latest shop activity</p>
+                            <h2 className="text-xl md:text-2xl font-bold text-zinc-950 tracking-tight">Recent <span className="text-primary-600">Orders</span></h2>
+                            <p className="text-[10px] font-medium text-slate-500 mt-1">Latest storefront activity</p>
                         </div>
                         <Clock className="w-6 h-6 text-primary-500" />
                     </div>
@@ -158,7 +158,7 @@ const AdminDashboard = () => {
                         <div className="space-y-4">{[...Array(5)].map((_, i) => <Skeleton key={i} className="h-16" />)}</div>
                     ) : stats.recentOrders.length === 0 ? (
                         <div className="py-20 text-center border-2 border-dashed border-slate-100 rounded-3xl">
-                            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Awaiting first deployment</p>
+                            <p className="text-[10px] font-medium text-slate-400 uppercase tracking-wider">No recent orders</p>
                         </div>
                     ) : (
                         <div className="space-y-4">

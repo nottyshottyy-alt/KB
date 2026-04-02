@@ -114,10 +114,10 @@ const ManageCoupons = () => {
                 <div>
                     <div className="flex items-center gap-2 mb-2">
                         <Tag className="w-4 h-4 text-primary-600" />
-                        <span className="text-[9px] font-black text-primary-600 uppercase tracking-[0.4em]">Store Discounts</span>
+                        <span className="text-[10px] font-bold text-primary-600 uppercase tracking-wider">Promotions</span>
                     </div>
-                    <h1 className="text-4xl md:text-5xl font-black text-zinc-950 italic tracking-tighter uppercase leading-none">Coupon <span className="text-primary-600">Management</span></h1>
-                    <p className="text-[10px] md:text-xs font-black text-slate-500 uppercase tracking-[0.5em] mt-3 italic">Manage your store's promotional offers</p>
+                    <h1 className="text-4xl md:text-5xl font-bold text-zinc-950 tracking-tight uppercase leading-none">Coupon <span className="text-primary-600">Management</span></h1>
+                    <p className="text-[10px] md:text-xs font-medium text-slate-500 mt-3">Manage your store's promotional offers</p>
                 </div>
                 <button
                     onClick={openCreate}
@@ -131,8 +131,8 @@ const ManageCoupons = () => {
             <div className="bg-white border border-slate-200 rounded-[3rem] shadow-sm overflow-hidden">
                 <div className="p-8 md:p-10 border-b border-slate-100 flex items-center justify-between">
                     <div>
-                        <h2 className="text-xl md:text-2xl font-black text-zinc-950 italic uppercase tracking-tighter">Active <span className="text-primary-600">Coupons</span></h2>
-                        <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest mt-1">Total Coupons: {coupons.length}</p>
+                        <h2 className="text-xl md:text-2xl font-bold text-zinc-950 tracking-tight uppercase">Active <span className="text-primary-600">Offers</span></h2>
+                        <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mt-1">Total Coupons: {coupons.length}</p>
                     </div>
                 </div>
                 
@@ -154,14 +154,14 @@ const ManageCoupons = () => {
                                 <tr key={c._id} className="border-b border-slate-50 hover:bg-slate-50/50 transition-all group">
                                     <td className="py-6 px-10">
                                         <div className="flex items-center gap-3">
-                                            <div className="w-10 h-10 rounded-xl bg-white border border-slate-200 flex items-center justify-center text-primary-600 font-mono font-black text-xs shadow-sm">
+                                            <div className="w-10 h-10 rounded-xl bg-white border border-slate-200 flex items-center justify-center text-primary-600 font-mono font-bold text-xs shadow-sm">
                                                 ID
                                             </div>
-                                            <span className="text-sm font-black text-zinc-950 italic tracking-widest uppercase font-mono">{c.code}</span>
+                                            <span className="text-sm font-bold text-zinc-950 tracking-wider uppercase font-mono">{c.code}</span>
                                         </div>
                                     </td>
                                     <td className="py-6 px-10">
-                                        <span className="text-sm font-black text-primary-600 italic tracking-tighter">
+                                        <span className="text-sm font-bold text-primary-600 tracking-tight">
                                             {c.discountType === 'percentage' ? `${c.discountValue}% Off` : `PKR ${c.discountValue.toLocaleString()} Off`}
                                         </span>
                                     </td>
@@ -170,24 +170,24 @@ const ManageCoupons = () => {
                                     </td>
                                     <td className="py-6 px-10">
                                         <div className="flex flex-col">
-                                            <span className="text-xs font-black text-zinc-950 italic">{c.usedCount}/{c.usageLimit === 0 ? 'Unlimited' : c.usageLimit}</span>
-                                            <span className="text-[7px] font-bold text-slate-400 uppercase tracking-widest mt-0.5">Uses</span>
+                                            <span className="text-xs font-bold text-zinc-950">{c.usedCount}/{c.usageLimit === 0 ? 'Unlimited' : c.usageLimit}</span>
+                                            <span className="text-[7px] font-bold text-slate-400 uppercase tracking-wider mt-0.5">Uses</span>
                                         </div>
                                     </td>
                                     <td className="py-6 px-10">
-                                        <span className={`text-[10px] font-black uppercase tracking-tighter ${isExpired(c.expiresAt) ? 'text-red-500' : 'text-slate-400'}`}>
+                                        <span className={`text-[10px] font-bold uppercase tracking-tight ${isExpired(c.expiresAt) ? 'text-red-500' : 'text-slate-400'}`}>
                                             {new Date(c.expiresAt).toLocaleDateString('en-PK')}
-                                            {isExpired(c.expiresAt) && <span className="block text-[7px] font-bold text-red-600 tracking-[0.2em] mt-0.5 italic">EXPIRED</span>}
+                                            {isExpired(c.expiresAt) && <span className="block text-[7px] font-bold text-red-600 tracking-wider mt-0.5">EXPIRED</span>}
                                         </span>
                                     </td>
                                     <td className="py-6 px-10">
                                         <div className="flex items-center gap-2">
                                             {c.isActive && !isExpired(c.expiresAt) ? (
-                                                <span className="inline-flex items-center gap-2 px-3 py-1.5 bg-primary-50 border border-primary-100 rounded-full text-[8px] font-black text-primary-600 uppercase tracking-widest">
+                                                <span className="inline-flex items-center gap-2 px-3 py-1.5 bg-primary-50 border border-primary-100 rounded-full text-[8px] font-bold text-primary-600 uppercase tracking-wider">
                                                     <CheckCircle className="w-2.5 h-2.5 fill-current" /> Active
                                                 </span>
                                             ) : (
-                                                <span className="inline-flex items-center gap-2 px-3 py-1.5 bg-slate-100 border border-slate-200 rounded-full text-[8px] font-black text-slate-500 uppercase tracking-widest">
+                                                <span className="inline-flex items-center gap-2 px-3 py-1.5 bg-slate-100 border border-slate-200 rounded-full text-[8px] font-bold text-slate-500 uppercase tracking-wider">
                                                     <XCircle className="w-2.5 h-2.5 fill-current" /> Inactive
                                                 </span>
                                             )}

@@ -97,13 +97,13 @@ const ManageCategories = () => {
                 <div>
                     <div className="flex items-center gap-2 mb-2">
                         <Grid className="w-4 h-4 text-primary-600" />
-                        <span className="text-[9px] font-black text-primary-600 uppercase tracking-[0.4em]">Category Organization</span>
+                        <span className="text-[10px] font-bold text-primary-600 uppercase tracking-wider">Categories</span>
                     </div>
-                    <h1 className="text-4xl md:text-5xl font-black text-zinc-950 italic tracking-tighter uppercase leading-none">Catalog <span className="text-primary-600">Management</span></h1>
+                    <h1 className="text-4xl md:text-5xl font-bold text-zinc-950 tracking-tight uppercase leading-none">Category <span className="text-primary-600">Management</span></h1>
                 </div>
                 <button
                     onClick={() => setShowAddForm(!showAddForm)}
-                    className={`group flex items-center gap-3 px-8 py-4 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all ${
+                    className={`group flex items-center gap-3 px-8 py-4 rounded-2xl text-[10px] font-bold uppercase tracking-wider transition-all ${
                         showAddForm 
                             ? 'bg-white text-slate-400 border border-slate-200 hover:text-zinc-950' 
                             : 'bg-primary-500 text-zinc-950 shadow-[0_20px_40px_rgba(68,214,44,0.15)] hover:bg-zinc-950 hover:text-white'
@@ -122,7 +122,7 @@ const ManageCategories = () => {
                         animate={{ opacity: 1, x: 0 }}
                         className="bg-white p-8 md:p-10 rounded-[3rem] border border-slate-200 shadow-sm relative overflow-hidden"
                     >
-                        <h2 className="text-xl md:text-2xl font-black text-zinc-950 italic uppercase tracking-tighter mb-10 flex items-center gap-4">
+                        <h2 className="text-xl md:text-2xl font-bold text-zinc-950 tracking-tight uppercase mb-10 flex items-center gap-4">
                             <div className="w-10 h-10 rounded-xl bg-primary-50 border border-primary-100 flex items-center justify-center">
                                 <Plus className="w-5 h-5 text-primary-600" />
                             </div>
@@ -130,12 +130,12 @@ const ManageCategories = () => {
                         </h2>
                         <form onSubmit={handleCreateCategory} className="space-y-6">
                             <div className="space-y-2">
-                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest px-2 italic">Category Name</label>
-                                <input type="text" required value={name} onChange={(e) => setName(e.target.value)} placeholder="Enter category name" className="w-full px-6 py-4 bg-slate-50 border border-slate-200 text-zinc-950 text-sm font-bold rounded-2xl focus:border-primary-500 transition-all focus:outline-none placeholder-slate-300" />
+                                <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest px-2">Category Name</label>
+                                <input type="text" required value={name} onChange={(e) => setName(e.target.value)} placeholder="e.g. Components" className="w-full px-6 py-4 bg-slate-50 border border-slate-200 text-zinc-950 text-sm font-bold rounded-2xl focus:border-primary-500 transition-all focus:outline-none placeholder-slate-300" />
                             </div>
                             <div className="space-y-2">
-                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest px-2 italic">Description</label>
-                                <textarea value={desc} onChange={(e) => setDesc(e.target.value)} rows="3" placeholder="Enter category description..." className="w-full px-6 py-4 bg-slate-50 border border-slate-200 text-zinc-950 text-sm font-bold rounded-[2rem] focus:border-primary-500 transition-all focus:outline-none placeholder-slate-300 resize-none"></textarea>
+                                <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest px-2">Description</label>
+                                <textarea value={desc} onChange={(e) => setDesc(e.target.value)} rows="3" placeholder="Category purpose..." className="w-full px-6 py-4 bg-slate-50 border border-slate-200 text-zinc-950 text-sm font-bold rounded-[2rem] focus:border-primary-500 transition-all focus:outline-none placeholder-slate-300 resize-none"></textarea>
                             </div>
                             <button type="submit" disabled={loading} className="w-full group flex items-center justify-center gap-4 bg-primary-500 text-zinc-950 py-4 rounded-2xl text-[10px] font-black uppercase tracking-widest hover:bg-zinc-950 hover:text-white transition-all shadow-sm disabled:opacity-50">
                                 {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <CheckCircle className="w-4 h-4" />}
@@ -150,7 +150,7 @@ const ManageCategories = () => {
                         animate={{ opacity: 1, x: 0 }}
                         className="bg-white p-8 md:p-10 rounded-[3rem] border border-slate-200 shadow-sm relative overflow-hidden"
                     >
-                        <h2 className="text-xl md:text-2xl font-black text-zinc-950 italic uppercase tracking-tighter mb-10 flex items-center gap-4">
+                        <h2 className="text-xl md:text-2xl font-bold text-zinc-950 tracking-tight uppercase mb-10 flex items-center gap-4">
                             <div className="w-10 h-10 rounded-xl bg-primary-50 border border-primary-100 flex items-center justify-center">
                                 <Layers className="w-5 h-5 text-primary-600" />
                             </div>
@@ -158,20 +158,20 @@ const ManageCategories = () => {
                         </h2>
                         <form onSubmit={handleCreateSubCategory} className="space-y-6">
                             <div className="space-y-2">
-                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest px-2 italic">Parent Sector Mapping</label>
+                                <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest px-2">Select Main Category</label>
                                 <select required value={selectedCatForSub} onChange={(e) => {
                                     setSelectedCatForSub(e.target.value);
                                     fetchSubCategories(e.target.value);
-                                }} className="w-full px-6 py-4 bg-slate-50 border border-slate-200 text-zinc-950 text-[10px] font-black uppercase tracking-widest rounded-2xl focus:border-primary-500 transition-all focus:outline-none appearance-none cursor-pointer">
-                                    <option value="" className="bg-white">SELECT PARENT CATEGORY</option>
+                                }} className="w-full px-6 py-4 bg-slate-50 border border-slate-200 text-zinc-950 text-[10px] font-bold uppercase tracking-wider rounded-2xl focus:border-primary-500 transition-all focus:outline-none appearance-none cursor-pointer">
+                                    <option value="" className="bg-white">CHOOSE PARENT</option>
                                     {categories.map(cat => (
                                         <option key={cat._id} value={cat._id} className="bg-white text-zinc-950">{cat.name}</option>
                                     ))}
                                 </select>
                             </div>
                             <div className="space-y-2">
-                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest px-2 italic">Sub-Category Name</label>
-                                <input type="text" required value={subName} onChange={(e) => setSubName(e.target.value)} placeholder="Enter sub-category name" className="w-full px-6 py-4 bg-slate-50 border border-slate-200 text-zinc-950 text-sm font-bold rounded-2xl focus:border-primary-500 transition-all focus:outline-none placeholder-slate-300" />
+                                <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest px-2">Sub-Category Name</label>
+                                <input type="text" required value={subName} onChange={(e) => setSubName(e.target.value)} placeholder="e.g. Graphics Cards" className="w-full px-6 py-4 bg-slate-50 border border-slate-200 text-zinc-950 text-sm font-bold rounded-2xl focus:border-primary-500 transition-all focus:outline-none placeholder-slate-300" />
                             </div>
                             <button type="submit" disabled={loading || !selectedCatForSub} className="w-full group flex items-center justify-center gap-4 bg-primary-500 text-zinc-950 py-4 rounded-2xl text-[10px] font-black uppercase tracking-widest hover:bg-zinc-950 hover:text-white transition-all shadow-sm disabled:opacity-50">
                                 {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <CheckCircle className="w-4 h-4" />}
@@ -185,8 +185,8 @@ const ManageCategories = () => {
             {/* List Categories */}
             <div className="bg-white border border-slate-200 rounded-[3rem] shadow-sm overflow-hidden">
                 <div className="p-8 md:p-10 border-b border-slate-100">
-                    <h2 className="text-xl md:text-2xl font-black text-zinc-950 italic uppercase tracking-tighter">Category <span className="text-primary-600">List</span></h2>
-                    <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest mt-1 italic">View and manage your product categories</p>
+                    <h2 className="text-xl md:text-2xl font-bold text-zinc-950 tracking-tight uppercase">Category <span className="text-primary-600">List</span></h2>
+                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mt-1">Manage all product categories</p>
                 </div>
                 
                 <div className="overflow-x-auto no-scrollbar">
@@ -206,7 +206,7 @@ const ManageCategories = () => {
                                             <div className="w-10 h-10 rounded-xl bg-white border border-slate-200 flex items-center justify-center text-primary-600 shadow-sm">
                                                 <Database className="w-4 h-4" />
                                             </div>
-                                            <span className="text-sm font-black text-zinc-950 uppercase italic tracking-tight">{cat.name}</span>
+                                            <span className="text-sm font-bold text-zinc-950 uppercase tracking-tight">{cat.name}</span>
                                         </div>
                                     </td>
                                     <td className="py-6 px-10">
