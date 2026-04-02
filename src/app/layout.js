@@ -7,6 +7,10 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata = {
   title: "KB COMPUTERS | Premium Tech Store",
   description: "Redefining your digital environment with high-performance computer systems and hardware.",
+  icons: {
+    icon: "/icon.png",
+    apple: "/icon.png",
+  }
 };
 
 export default function RootLayout({ children }) {
