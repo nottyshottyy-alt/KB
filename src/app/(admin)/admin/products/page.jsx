@@ -344,8 +344,8 @@ const ManageProducts = () => {
                                     </td>
                                     <td className="py-6 px-10">
                                         <div className="flex flex-col">
-                                            <span className="text-sm font-black text-zinc-950 italic tracking-tighter">PKR {prod.price.toLocaleString()}</span>
-                                            {prod.discountPrice > 0 && <span className="text-[9px] font-black text-primary-600/50 line-through">PKR {prod.discountPrice.toLocaleString()}</span>}
+                                            <span className="text-sm font-black text-zinc-950 italic tracking-tighter">PKR {(prod.discountPrice || prod.price).toLocaleString()}</span>
+                                            {prod.discountPrice > 0 && <span className="text-[9px] font-black text-primary-600/50 line-through">PKR {prod.price.toLocaleString()}</span>}
                                         </div>
                                     </td>
                                     <td className="py-6 px-10">
