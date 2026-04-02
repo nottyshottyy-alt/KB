@@ -3,8 +3,6 @@
 import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Phone, Mail, MapPin, Clock, MessageCircle, Send, Zap, Activity } from 'lucide-react';
-import ParticleBackground from '@/components/ParticleBackground';
-import AmbientBackground from '@/components/AmbientBackground';
 
 const ContactUsPage = () => {
     useEffect(() => {
@@ -43,8 +41,8 @@ const ContactUsPage = () => {
 
     return (
         <div className="min-h-screen bg-zinc-950 text-slate-200 py-12 md:py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
-            <ParticleBackground count={15} color="#44d62c" opacity={0.15} />
-            <AmbientBackground className="absolute inset-0 z-0 opacity-50" />
+            {/* Background effects removed for performance and build stability */}
+
 
             <div className="max-w-3xl md:max-w-7xl mx-auto relative z-10">
 
