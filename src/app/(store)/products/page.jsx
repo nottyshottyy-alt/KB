@@ -73,35 +73,35 @@ const CatalogContent = () => {
         <div className="min-h-screen bg-zinc-950 text-slate-200 py-20">
             <div className="max-w-7xl mx-auto px-6 lg:px-8">
                 <div className="flex flex-col lg:flex-row lg:items-end justify-between mb-16 gap-12 border-b border-white/5 pb-12">
-                    <div className="space-y-4">
-                        <div className="inline-flex items-center gap-2 text-primary-500 text-[10px] font-black uppercase tracking-[0.4em]">
+                    <div className="space-y-3">
+                        <div className="inline-flex items-center gap-2 text-primary-500 text-[10px] font-bold uppercase tracking-[0.3em]">
                             <span className="w-1.5 h-1.5 bg-primary-500 rounded-full"></span>
-                            Hardware Collection
+                            Product Catalog
                         </div>
-                        <h1 className="text-3xl sm:text-4xl md:text-6xl font-black text-white tracking-tighter leading-none italic uppercase">
-                            Premium <span className="text-zinc-800">Hardware</span>
+                        <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white tracking-tight leading-tight uppercase">
+                            Premium <span className="text-zinc-600">Inventory</span>
                         </h1>
-                        <p className="text-[11px] text-slate-500 max-w-md font-medium">
-                            Professional computer systems and components for high-end setups.
+                        <p className="text-[12px] text-slate-500 max-w-md font-medium leading-relaxed">
+                            Professional computer systems and components curated for high-end workspace setups.
                         </p>
                     </div>
 
                     <div className="flex flex-wrap items-center gap-4">
-                        <div className="flex items-center gap-1 sm:gap-2 bg-zinc-900/50 border border-white/5 px-3 sm:px-4 py-2 sm:py-3 rounded-xl sm:rounded-2xl backdrop-blur-md">
-                            <span className="text-[9px] font-black text-slate-600 uppercase tracking-widest mr-1 sm:mr-2">Price</span>
-                            <div className="flex items-center gap-2 sm:gap-3">
+                        <div className="flex items-center gap-2 sm:gap-3 bg-zinc-900/30 border border-white/5 px-4 py-2 sm:py-2.5 rounded-xl backdrop-blur-xl transition-all duration-300 hover:border-white/10">
+                            <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mr-1">Price Range</span>
+                            <div className="flex items-center gap-2">
                                 <input
                                     type="number"
-                                    placeholder="MIN"
-                                    className="w-14 sm:w-20 bg-transparent border-none outline-none focus:ring-0 text-xs sm:text-sm font-black placeholder-zinc-700 text-white"
+                                    placeholder="Min"
+                                    className="w-16 sm:w-20 bg-transparent border-none outline-none focus:ring-0 text-xs font-semibold placeholder-zinc-700 text-white"
                                     value={minPrice}
                                     onChange={(e) => setMinPrice(e.target.value)}
                                 />
-                                <div className="w-2 sm:w-4 h-[1px] bg-zinc-800"></div>
+                                <div className="w-2 h-[1px] bg-zinc-800"></div>
                                 <input
                                     type="number"
-                                    placeholder="MAX"
-                                    className="w-14 sm:w-20 bg-transparent border-none outline-none focus:ring-0 text-xs sm:text-sm font-black placeholder-zinc-700 text-white"
+                                    placeholder="Max"
+                                    className="w-16 sm:w-20 bg-transparent border-none outline-none focus:ring-0 text-xs font-semibold placeholder-zinc-700 text-white"
                                     value={maxPrice}
                                     onChange={(e) => setMaxPrice(e.target.value)}
                                 />
@@ -109,36 +109,36 @@ const CatalogContent = () => {
                         </div>
 
                         <div className="relative group">
-                            <div className="flex items-center gap-2 sm:gap-3 bg-zinc-900/50 border border-white/5 px-4 sm:px-5 py-2 sm:py-3 rounded-xl sm:rounded-2xl backdrop-blur-md group-hover:border-primary-500/30 transition-colors">
-                                <Filter className="w-3 h-3 sm:w-4 sm:h-4 text-primary-500" />
+                            <div className="flex items-center gap-3 bg-zinc-900/30 border border-white/5 px-4 py-2 sm:py-2.5 rounded-xl backdrop-blur-xl hover:border-primary-500/30 transition-all duration-300">
+                                <Filter className="w-3.5 h-3.5 text-primary-500" />
                                 <select
                                     value={selectedCategory}
                                     onChange={(e) => setSelectedCategory(e.target.value)}
-                                    className="bg-transparent border-none outline-none focus:ring-0 text-[9px] sm:text-[10px] font-black uppercase tracking-widest text-white cursor-pointer appearance-none pr-6 sm:pr-8"
+                                    className="bg-transparent border-none outline-none focus:ring-0 text-[10px] font-bold uppercase tracking-wider text-white cursor-pointer appearance-none pr-8"
                                 >
-                                    <option value="" className="bg-zinc-900">All Systems</option>
+                                    <option value="" className="bg-zinc-900">All Categories</option>
                                     {categories.map(c => (
                                         <option key={c._id} value={c._id} className="bg-zinc-900">{c.name}</option>
                                     ))}
                                 </select>
-                                <ChevronDown className="absolute right-3 sm:right-4 w-2 sm:w-3 h-2 sm:h-3 text-slate-600 pointer-events-none" />
+                                <ChevronDown className="absolute right-4 w-3 h-3 text-slate-600 pointer-events-none group-hover:text-primary-500 transition-colors" />
                             </div>
                         </div>
 
                         <div className="relative group">
-                            <div className="flex items-center gap-2 sm:gap-3 bg-zinc-900/50 border border-white/5 px-4 sm:px-5 py-2 sm:py-3 rounded-xl sm:rounded-2xl backdrop-blur-md group-hover:border-primary-500/30 transition-colors">
-                                <SlidersHorizontal className="w-3 h-3 sm:w-4 sm:h-4 text-primary-500" />
+                            <div className="flex items-center gap-3 bg-zinc-900/30 border border-white/5 px-4 py-2 sm:py-2.5 rounded-xl backdrop-blur-xl hover:border-primary-500/30 transition-all duration-300">
+                                <SlidersHorizontal className="w-3.5 h-3.5 text-primary-500" />
                                 <select
                                     value={sort}
                                     onChange={(e) => setSort(e.target.value)}
-                                    className="bg-transparent border-none outline-none focus:ring-0 text-[9px] sm:text-[10px] font-black uppercase tracking-widest text-white cursor-pointer appearance-none pr-6 sm:pr-8"
+                                    className="bg-transparent border-none outline-none focus:ring-0 text-[10px] font-bold uppercase tracking-wider text-white cursor-pointer appearance-none pr-8"
                                 >
-                                    <option value="newest" className="bg-zinc-900">Newest</option>
-                                    <option value="price_asc" className="bg-zinc-900">Price Low</option>
-                                    <option value="price_desc" className="bg-zinc-900">Price High</option>
-                                    <option value="popular" className="bg-zinc-900">Popular</option>
+                                    <option value="newest" className="bg-zinc-900">Newest Arrivals</option>
+                                    <option value="price_asc" className="bg-zinc-900">Price: Low to High</option>
+                                    <option value="price_desc" className="bg-zinc-900">Price: High to Low</option>
+                                    <option value="popular" className="bg-zinc-900">Most Popular</option>
                                 </select>
-                                <ChevronDown className="absolute right-3 sm:right-4 w-2 sm:w-3 h-2 sm:h-3 text-slate-600 pointer-events-none" />
+                                <ChevronDown className="absolute right-4 w-3 h-3 text-slate-600 pointer-events-none group-hover:text-primary-500 transition-colors" />
                             </div>
                         </div>
                     </div>
@@ -164,9 +164,11 @@ const CatalogContent = () => {
                         className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6"
                     >
                         {products.length === 0 ? (
-                            <div className="col-span-full flex flex-col items-center justify-center py-40 space-y-6 opacity-40 italic">
-                                <Search className="w-16 h-16 text-zinc-800" />
-                                <p className="text-xl font-black uppercase tracking-widest">No matching assets found</p>
+                            <div className="col-span-full flex flex-col items-center justify-center py-40 space-y-6 opacity-40">
+                                <div className="p-8 bg-white/5 rounded-full backdrop-blur-xl border border-white/10">
+                                    <Search className="w-12 h-12 text-zinc-500" />
+                                </div>
+                                <p className="text-lg font-bold uppercase tracking-widest text-white">No products found matches your criteria</p>
                             </div>
                         ) : (
                             products.map(product => (
