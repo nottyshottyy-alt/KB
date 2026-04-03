@@ -11,7 +11,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 const CheckoutPage = () => {
     const { userInfo } = useAuthStore();
-    const { cartItems, clearCart } = useCartStore();
+    const { cartItems, clearCart, appliedCoupon } = useCartStore();
     const router = useRouter();
 
     const [name, setName] = useState(userInfo?.name || '');
@@ -37,7 +37,8 @@ const CheckoutPage = () => {
     }, [cartItems, router]);
 
     const itemsPrice = cartItems.reduce((acc, item) => acc + item.price * item.qty, 0);
-    const totalPrice = itemsPrice;
+    const discount = appliedCoupon?.discount || 0;
+    const totalPrice = Math.max(itemsPrice - discount, 0);
     const [phoneError, setPhoneError] = useState('');
 
     const validatePakistaniPhone = (phone) => {
@@ -77,6 +78,8 @@ const CheckoutPage = () => {
                 shippingAddress,
                 paymentMethod,
                 itemsPrice,
+                totalPrice,
+                couponCode: appliedCoupon?.code || '',
                 customerName: name,
                 customerEmail: email
             });
@@ -224,10 +227,17 @@ const CheckoutPage = () => {
                                     <span className="font-bold text-white text-sm">PKR {itemsPrice.toLocaleString()}</span>
                                 </div>
 
+                                {appliedCoupon && (
+                                    <div className="flex justify-between items-center text-primary-500">
+                                        <span className="text-[10px] font-black uppercase tracking-widest italic">Discount ({appliedCoupon.code})</span>
+                                        <span className="font-black italic">- PKR {Math.round(discount).toLocaleString()}</span>
+                                    </div>
+                                )}
+
                                 <div className="pt-8 border-t border-white/5 flex flex-col gap-2">
                                     <div className="flex justify-between items-end">
                                         <span className="text-[9px] sm:text-[10px] font-black text-white uppercase tracking-widest">Total Amount</span>
-                                        <span className="text-2xl sm:text-4xl font-black text-white italic tracking-tighter">PKR {totalPrice.toLocaleString()}</span>
+                                        <span className="text-2xl sm:text-4xl font-black text-white italic tracking-tighter">PKR {Math.round(totalPrice).toLocaleString()}</span>
                                     </div>
                                     <p className="text-[9px] font-bold text-slate-600 uppercase tracking-widest text-right">Secure Checkout Final</p>
                                 </div>

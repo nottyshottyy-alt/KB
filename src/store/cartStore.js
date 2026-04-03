@@ -2,7 +2,13 @@ import { create } from 'zustand';
 
 const useCartStore = create((set, get) => ({
     cartItems: typeof window !== 'undefined' && localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : [],
+    appliedCoupon: typeof window !== 'undefined' && localStorage.getItem('appliedCoupon') ? JSON.parse(localStorage.getItem('appliedCoupon')) : null,
     
+    setAppliedCoupon: (coupon) => {
+        set({ appliedCoupon: coupon });
+        if (typeof window !== 'undefined') localStorage.setItem('appliedCoupon', JSON.stringify(coupon));
+    },
+
     addToCart: (product, qty) => {
         const cartItem = {
             product: product._id || product.product,
@@ -44,8 +50,11 @@ const useCartStore = create((set, get) => ({
     },
 
     clearCart: () => {
-        set({ cartItems: [] });
-        if (typeof window !== 'undefined') localStorage.removeItem('cartItems');
+        set({ cartItems: [], appliedCoupon: null });
+        if (typeof window !== 'undefined') {
+            localStorage.removeItem('cartItems');
+            localStorage.removeItem('appliedCoupon');
+        }
     }
 }));
 

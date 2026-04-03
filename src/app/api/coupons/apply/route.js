@@ -4,22 +4,39 @@ import Coupon from '@/lib/models/Coupon';
 import Product from '@/lib/models/Product';
 import { getAuthUser } from '@/lib/middleware/authMiddleware';
 
+import CouponUsage from '@/lib/models/CouponUsage';
+
 export async function POST(req) {
     try {
         await connectDB();
         const user = await getAuthUser();
-        if (!user) return NextResponse.json({ message: 'Not authorized' }, { status: 401 });
+        if (!user) return NextResponse.json({ message: 'Please log in or register to use coupons' }, { status: 401 });
 
         const { code, orderAmount, cartItems } = await req.json();
         const coupon = await Coupon.findOne({ code: code.toUpperCase(), isActive: true });
 
         if (!coupon) return NextResponse.json({ message: 'No coupon found' }, { status: 404 });
-        if (coupon.expiresAt < new Date()) return NextResponse.json({ message: 'Coupon has expired' }, { status: 400 });
-        if (coupon.usageLimit > 0 && coupon.usedCount >= coupon.usageLimit) {
-            return NextResponse.json({ message: 'Coupon usage limit reached' }, { status: 400 });
+
+        // 1. Expiry Check (Minute-precise)
+        if (coupon.expiresAt < new Date()) {
+            return NextResponse.json({ message: 'Coupon has expired' }, { status: 400 });
         }
+
+        // 2. Global Usage Limit Check
+        if (coupon.usageLimit > 0 && coupon.usedCount >= coupon.usageLimit) {
+            return NextResponse.json({ message: 'YOU HAVE ALREADY USED THIS DISCOUNT' }, { status: 400 });
+        }
+
+        // 3. Per-User Usage Limit Check
+        if (coupon.userLimit > 0) {
+            const usage = await CouponUsage.findOne({ coupon: coupon._id, user: user._id });
+            if (usage && usage.count >= coupon.userLimit) {
+                return NextResponse.json({ message: 'YOU HAVE ALREADY USED THIS DISCOUNT' }, { status: 400 });
+            }
+        }
+
         if (orderAmount < coupon.minOrderAmount) {
-            return NextResponse.json({ message: `Minimum order amount for this coupon is PKR ${coupon.minOrderAmount}` }, { status: 400 });
+            return NextResponse.json({ message: `minimum ${coupon.minOrderAmount}Rs shopping required for this coupon` }, { status: 400 });
         }
 
         let discountableAmount = orderAmount;
@@ -32,9 +49,9 @@ export async function POST(req) {
 
             const productIds = cartItems.map(item => item.product);
             const products = await Product.find({ _id: { $in: productIds } });
-            
+
             const applicableCategoryIds = coupon.applicableCategories.map(id => id.toString());
-            
+
             const eligibleItems = cartItems.filter(item => {
                 const product = products.find(p => p._id.toString() === item.product.toString());
                 return product && applicableCategoryIds.includes(product.category.toString());

@@ -1,8 +1,9 @@
 import { NextResponse } from 'next/server';
 import connectDB from '@/lib/db';
 import Order from '@/lib/models/Order';
-import User from '@/lib/models/User';
 import Product from '@/lib/models/Product';
+import Coupon from '@/lib/models/Coupon';
+import CouponUsage from '@/lib/models/CouponUsage';
 import sendEmail from '@/lib/utils/sendEmail';
 import { getAuthUser } from '@/lib/middleware/authMiddleware';
 
@@ -30,6 +31,7 @@ export async function POST(req) {
             shippingAddress,
             paymentMethod,
             itemsPrice,
+            couponCode,
             customerName,
             customerEmail
         } = body;
@@ -38,8 +40,39 @@ export async function POST(req) {
             return NextResponse.json({ message: 'No order items' }, { status: 400 });
         }
 
+        let discount = 0;
+        let appliedCoupon = null;
+
+        if (couponCode) {
+            appliedCoupon = await Coupon.findOne({ code: couponCode.toUpperCase(), isActive: true });
+            if (appliedCoupon) {
+                // 1. Expiry Check
+                const isExpired = appliedCoupon.expiresAt < new Date();
+                
+                // 2. Global Limit Check
+                const globalLimitReached = appliedCoupon.usageLimit > 0 && appliedCoupon.usedCount >= appliedCoupon.usageLimit;
+                
+                // 3. Per-User Limit Check
+                let userLimitReached = false;
+                if (user && appliedCoupon.userLimit > 0) {
+                    const usage = await CouponUsage.findOne({ coupon: appliedCoupon._id, user: user._id });
+                    if (usage && usage.count >= appliedCoupon.userLimit) {
+                        userLimitReached = true;
+                    }
+                }
+                
+                if (!isExpired && !globalLimitReached && !userLimitReached) {
+                    if (appliedCoupon.discountType === 'percentage') {
+                        discount = (itemsPrice * appliedCoupon.discountValue) / 100;
+                    } else {
+                        discount = appliedCoupon.discountValue;
+                    }
+                }
+            }
+        }
+
         const shippingPrice = 0;
-        const totalPrice = itemsPrice;
+        const totalPrice = Math.max(itemsPrice - discount, 0);
 
         const orderData = {
             orderItems,
@@ -48,6 +81,8 @@ export async function POST(req) {
             itemsPrice,
             shippingPrice,
             totalPrice,
+            coupon: appliedCoupon ? appliedCoupon._id : undefined,
+            discount: discount
         };
 
         if (user) {
@@ -59,6 +94,21 @@ export async function POST(req) {
 
         const order = new Order(orderData);
         const createdOrder = await order.save();
+
+        // Increment Coupon Usage
+        if (appliedCoupon) {
+            // 1. Global Increment
+            await Coupon.findByIdAndUpdate(appliedCoupon._id, { $inc: { usedCount: 1 } });
+            
+            // 2. Per-User Increment (only if user is logged in)
+            if (user) {
+                await CouponUsage.findOneAndUpdate(
+                    { coupon: appliedCoupon._id, user: user._id },
+                    { $inc: { count: 1 } },
+                    { upsert: true, new: true }
+                );
+            }
+        }
 
         // Increment soldCount
         await Promise.all(

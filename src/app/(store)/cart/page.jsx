@@ -11,7 +11,7 @@ import api from '@/lib/api/axios';
 import toast from 'react-hot-toast';
 
 const CartPage = () => {
-    const { cartItems, addToCart, removeFromCart } = useCartStore();
+    const { cartItems, addToCart, removeFromCart, appliedCoupon, setAppliedCoupon } = useCartStore();
     const { userInfo } = useAuthStore();
     const router = useRouter();
 
@@ -25,7 +25,6 @@ const CartPage = () => {
     };
 
     const [couponCode, setCouponCode] = useState('');
-    const [appliedCoupon, setAppliedCoupon] = useState(null);
     const [couponLoading, setCouponLoading] = useState(false);
 
     const cartSubtotal = cartItems.reduce((acc, item) => acc + item.qty * item.price, 0);
@@ -35,7 +34,7 @@ const CartPage = () => {
 
     const handleApplyCoupon = async () => {
         if (!couponCode.trim()) return;
-        if (!userInfo) { toast.error('Check: Authentication Required'); return; }
+        if (!userInfo) { toast.error('Please log in or register to use coupons'); return; }
         setCouponLoading(true);
         try {
             const { data } = await api.post('/api/coupons/apply', {
@@ -52,7 +51,10 @@ const CartPage = () => {
         }
     };
 
-    const removeCoupon = () => { setAppliedCoupon(null); setCouponCode(''); };
+    const removeCoupon = () => { 
+        setAppliedCoupon(null); 
+        setCouponCode(''); 
+    };
 
     const updateQty = (item, newQty) => {
         if (newQty < 1) return;

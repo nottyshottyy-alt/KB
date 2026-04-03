@@ -25,6 +25,15 @@ export async function POST(req) {
             return NextResponse.json({ message: 'Not authorized as an admin' }, { status: 401 });
         }
         const body = await req.json();
+        
+        // Expiry precision
+        if (body.isActive && body.expiresAt) {
+            const expiry = new Date(body.expiresAt);
+            if (expiry < new Date()) {
+                return NextResponse.json({ message: 'Cannot activate an expired coupon. Please extend the expiry date.' }, { status: 400 });
+            }
+        }
+
         const coupon = new Coupon(body);
         const created = await coupon.save();
         return NextResponse.json(created, { status: 201 });

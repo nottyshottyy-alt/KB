@@ -225,7 +225,7 @@ const StoreLayout = ({ children }) => {
                         <div className="flex items-center gap-2 sm:gap-4">
                             
                             {/* Admin Shortcut */}
-                            {userInfo && userInfo.isAdmin && (
+                            {mounted && userInfo && userInfo.isAdmin && (
                                 <Link href="/admin" className="hidden xl:flex items-center gap-2 text-slate-400 hover:text-primary-500 transition-colors py-2 px-3 rounded-lg hover:bg-white/5">
                                     <ShieldCheck className="w-5 h-5" />
                                     <span className="text-sm font-semibold">Admin</span>
@@ -234,7 +234,7 @@ const StoreLayout = ({ children }) => {
 
                             {/* User Account */}
                             <div className="relative group">
-                                {userInfo ? (
+                                {mounted && userInfo ? (
                                     <button 
                                         onClick={() => router.push('/profile')}
                                         className="flex items-center gap-2 text-slate-400 hover:text-white transition py-2 px-3 rounded-lg hover:bg-white/5"
@@ -254,7 +254,7 @@ const StoreLayout = ({ children }) => {
                                     </Link>
                                 )}
 
-                                {userInfo && (
+                                {mounted && userInfo && (
                                     <div className="absolute right-0 top-[120%] w-64 origin-top-right glass border border-white/10 divide-y divide-white/5 rounded-2xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-[100] transform group-hover:translate-y-0 translate-y-4">
                                         <div className="px-5 py-5">
                                             <p className="text-sm font-bold text-white truncate">{userInfo.name}</p>

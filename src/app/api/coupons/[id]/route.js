@@ -11,6 +11,15 @@ export async function PUT(req, { params }) {
 
         const { id } = await params;
         const body = await req.json();
+
+        // Expiry precision
+        if (body.isActive && body.expiresAt) {
+            const expiry = new Date(body.expiresAt);
+            if (expiry < new Date()) {
+                return NextResponse.json({ message: 'Cannot activate an expired coupon. Please extend the expiry date.' }, { status: 400 });
+            }
+        }
+
         const coupon = await Coupon.findByIdAndUpdate(id, body, { new: true, runValidators: true });
         if (!coupon) return NextResponse.json({ message: 'Coupon not found' }, { status: 404 });
         return NextResponse.json(coupon);

@@ -7,8 +7,9 @@ const couponSchema = new mongoose.Schema({
     minOrderAmount: { type: Number, default: 0 },
     expiresAt: { type: Date, required: true },
     isActive: { type: Boolean, default: true },
-    usageLimit: { type: Number, default: 0 }, // 0 = unlimited
+    usageLimit: { type: Number, default: 0 }, // 0 = unlimited (Global)
     usedCount: { type: Number, default: 0 },
+    userLimit: { type: Number, default: 1 }, // 0 = unlimited (Per User)
     applicableCategories: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Category' }],
 }, { timestamps: true });
 
